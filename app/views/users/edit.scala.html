@@ -1,0 +1,17 @@
+@(id: Long, userForm: Form[controllers.UsersController.UserForm], companies: Seq[models.Companies])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("ユーザ作成") {
+  @form(CSRF(routes.UsersController.update(id)), Symbol("role") -> "form") {
+    <div class="form-group">
+      @inputText(userForm("name"), '_label -> "名前")
+    </div>
+    <div class="form-group">
+      @select(userForm("companyId"), companies.map(x => x.id.toString -> x.name).toSeq, '_label -> "会社", '_default -> "-- 会社名を選択してください --")
+    </div>
+    <div>
+      <input type="submit" value="保存" class="btn btn-success">
+    </div>
+  }
+}

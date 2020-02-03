@@ -1,0 +1,26 @@
+@(user: models.Users, company: Option[models.Companies])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("ユーザ詳細") {
+  <dl class="row">
+    <dt class="col-3">
+      ID
+    </dt>
+    <dd class="col-9">
+      @user.id
+    </dd>
+    <dt class="col-3">
+      名前
+    </dt>
+    <dd class="col-9">
+      @user.name
+    </dd>
+    <dt class="col-3">
+      会社名
+    </dt>
+    <dd class="col-9">
+      @company.map(_.name)
+    </dd>
+  </dl>
+}

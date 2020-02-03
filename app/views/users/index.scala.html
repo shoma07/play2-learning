@@ -1,0 +1,64 @@
+@* このテンプレートの引数 *@
+@(users: Seq[(models.Users, Option[models.Companies])])(implicit request: RequestHeader)
+
+@* テンプレートで利用可能なヘルパーをインポート *@
+@import helper._
+
+@* main.scala.htmlを呼び出す *@
+@main("ユーザ一覧") {
+  <div class="row mt-2">
+    <div class="col">
+      <a href="@routes.UsersController.news()" class="btn btn-sm btn-outline-primary" role="button">
+        新規作成
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col">
+      <div class="table-responsive-sm">
+        <table class="table table-sm table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                名前
+              </th>
+              <th>
+                会社名
+              </th>
+              <th>
+                &nbsp;
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @* ユーザの一覧をループで出力 *@
+            @users.map { case (user, company) =>
+              <tr>
+                <td>
+                  @user.id
+                </td>
+                <td>
+                  <a href="@routes.UsersController.edit(user.id)">
+                    @user.name
+                  </a>
+                </td>
+                <td>
+                  @company.map(_.name)
+                </td>
+                <td>
+                  @helper.form(CSRF(routes.UsersController.destroy(user.id))){
+                    <input type="submit" value="削除" class="btn btn-danger btn-sm"/>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+}

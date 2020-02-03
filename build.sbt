@@ -1,4 +1,4 @@
-name := """play2-hands-on"""
+name := """play2-learning"""
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
